@@ -35,6 +35,8 @@ export function CreatePost() {
         />
       </div>
       <br />
+      <label htmlFor='ingredient-list'>Ingredients </label>
+      <br />
       <textarea
         value={contents}
         onChange={(e) => setContents(e.target.value)}
