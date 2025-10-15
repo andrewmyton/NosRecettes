@@ -43,6 +43,12 @@ export function CreatePost() {
       />
       <br />
       <br />
+      <form action='/action_page.php'>
+        <label htmlFor='image-url'>Upload Image</label>
+        <input type='file' id='myFile' name='filename'></input>
+      </form>
+
+      <br />
       <input
         type='submit'
         value={createPostMutation.isPending ? 'Creating...' : 'Create'}

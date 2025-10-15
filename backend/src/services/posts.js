@@ -1,8 +1,8 @@
 import { Post } from '../db/models/post.js'
 import { User } from '../db/models/user.js'
 
-export async function createPost(userId, { title, contents, image, tags }) {
-  const post = new Post({ title, author: userId, contents, image, tags })
+export async function createPost(userId, { title, contents, imageURL, tags }) {
+  const post = new Post({ title, author: userId, contents, imageURL, tags })
   return await post.save()
 }
 
