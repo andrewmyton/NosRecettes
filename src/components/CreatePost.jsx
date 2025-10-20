@@ -8,10 +8,11 @@ export function CreatePost() {
 
   const [title, setTitle] = useState('')
   const [contents, setContents] = useState('')
+  const [imageURL, setImageURL] = useState('')
 
   const queryClient = useQueryClient()
   const createPostMutation = useMutation({
-    mutationFn: () => createPost(token, { title, contents }),
+    mutationFn: () => createPost(token, { title, contents, imageURL }),
     onSuccess: () => queryClient.invalidateQueries(['posts']),
   })
 
@@ -43,11 +44,12 @@ export function CreatePost() {
       />
       <br />
       <br />
-      <form action='/action_page.php'>
-        <label htmlFor='image-url'>Upload Image</label>
-        <input type='file' id='myFile' name='filename'></input>
-      </form>
-
+      <label htmlFor='image-url'>Place image URL below: </label>
+      <br />
+      <textarea
+        value={imageURL}
+        onChange={(e) => setImageURL(e.target.value)}
+      />
       <br />
       <input
         type='submit'

@@ -14,18 +14,3 @@ const image = '/workspaces/NosRecettes/backend/images/Apple.jpg'
 cloudinary.uploader.upload(image).then((result) => {
   console.log(result.url)
 })
-
-// const uploadImage = async (imagePath) => {
-//   try {
-//     const result = await cloudinary.uploader.upload(imagePath, {
-//       use_filename: true,
-//       unique_filename: false,
-//       overwrite: true,
-//     });
-//     console.log('Upload successful:', result);
-//     return result;
-//   } catch (error) {
-//     console.error('Upload failed:', error);
-//     throw error;
-//   }
-// };
