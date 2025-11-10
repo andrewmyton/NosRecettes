@@ -9,10 +9,11 @@ export function CreatePost() {
   const [title, setTitle] = useState('')
   const [contents, setContents] = useState('')
   const [imageURL, setImageURL] = useState('')
+  const likes = 0
 
   const queryClient = useQueryClient()
   const createPostMutation = useMutation({
-    mutationFn: () => createPost(token, { title, contents, imageURL }),
+    mutationFn: () => createPost(token, { title, contents, imageURL, likes }),
     onSuccess: () => queryClient.invalidateQueries(['posts']),
   })
 

@@ -8,6 +8,7 @@ export function Post({
   contents,
   imageURL,
   author,
+  likes,
   _id,
   fullPost = false,
 }) {
@@ -31,6 +32,7 @@ export function Post({
           Written by <User id={author} />
         </em>
       )}
+      <div>Likes: {likes}</div>
     </article>
   )
 }
@@ -40,6 +42,7 @@ Post.propTypes = {
   contents: PropTypes.string,
   author: PropTypes.string,
   imageURL: PropTypes.string,
+  likes: PropTypes.number,
   _id: PropTypes.string.isRequired,
   fullPost: PropTypes.bool,
 }
