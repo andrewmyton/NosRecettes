@@ -3,6 +3,7 @@ import { User } from './User.jsx'
 import { Link } from 'react-router-dom'
 import slug from 'slug'
 import { useAuth } from '../contexts/AuthContext.jsx'
+import { LikeButton } from './LikeButton.jsx'
 
 export function Post({
   title,
@@ -61,6 +62,9 @@ export function Post({
         </em>
       )}
       <div>Likes: {likes}</div>
+      <div>
+        <LikeButton />
+      </div>
     </article>
   )
 }

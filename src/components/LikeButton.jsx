@@ -1,7 +1,7 @@
 // LikeButton.jsx
 import { useState } from 'react'
 
-const LikeButton = () => {
+export const LikeButton = () => {
   const [liked, setLiked] = useState(false) // State to track if the item is liked
   const [likesCount, setLikesCount] = useState(0) // State to track the number of likes
 

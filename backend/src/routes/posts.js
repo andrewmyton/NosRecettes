@@ -73,4 +73,8 @@ export function postsRoutes(app) {
       return res.status(500).end()
     }
   })
+
+  // app.post('/api/v1/posts/:id/like', async (req, res) => {
+
+  // })
 }

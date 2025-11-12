@@ -52,3 +52,7 @@ export async function updatePost(userId, postId, { title, contents, tags }) {
 export async function deletePost(userId, postId) {
   return await Post.deleteOne({ _id: postId, author: userId })
 }
+
+// export async function likePost(params) {
+
+// }
