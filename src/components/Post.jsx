@@ -63,7 +63,7 @@ export function Post({
       )}
       <div>Likes: {likes}</div>
       <div>
-        <LikeButton />
+        <LikeButton likes={likes} />
       </div>
     </article>
   )
