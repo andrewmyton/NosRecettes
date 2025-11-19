@@ -7,11 +7,7 @@ const postSchema = new Schema(
     contents: String,
     imageURL: String,
     likes: { type: Number, default: 0 },
-    likedBy: {
-      type: [Schema.Types.ObjectId],
-      ref: 'user',
-      default: [],
-    },
+    likedBy: { type: [Schema.Types.ObjectId], ref: 'user', default: [] },
     tags: [String],
   },
   { timestamps: true },

@@ -76,11 +76,11 @@ export function postsRoutes(app) {
     }
   })
 
-  app.post('/api/v1/posts/:id/like', async (req, res) => {
+  app.post('/api/v1/posts/:id/like', requireAuth, async (req, res) => {
     const { id: postId } = req.params // Renaming 'id' to 'postId' for clarity
-
+    const userId = req.auth.sub
     try {
-      const post = await likePost(postId)
+      const post = await likePost(postId, userId)
 
       if (post === null) {
         // If post is null, the ID was valid but no matching document was found
@@ -98,10 +98,11 @@ export function postsRoutes(app) {
     }
   })
 
-  app.patch('/api/v1/posts/:id/unlike', async (req, res) => {
+  app.patch('/api/v1/posts/:id/unlike', requireAuth, async (req, res) => {
     const { id: postId } = req.params
+    const userId = req.auth.sub
     try {
-      const post = await unlikePost(postId)
+      const post = await unlikePost(postId, userId)
 
       if (post === null) {
         return res.status(404).end()

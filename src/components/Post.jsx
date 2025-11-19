@@ -2,7 +2,6 @@ import PropTypes from 'prop-types'
 import { User } from './User.jsx'
 import { Link } from 'react-router-dom'
 import slug from 'slug'
-
 import { LikeButton } from './LikeButton.jsx'
 
 export function Post({

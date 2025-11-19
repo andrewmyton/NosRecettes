@@ -1,16 +1,13 @@
 import { Post } from '../db/models/post.js'
 import { User } from '../db/models/user.js'
+import mongoose from 'mongoose'
 
-export async function createPost(
-  userId,
-  { title, contents, imageURL, likes, tags },
-) {
+export async function createPost(userId, { title, contents, imageURL, tags }) {
   const post = new Post({
     title,
     author: userId,
     contents,
     imageURL,
-    likes,
     tags,
   })
   return await post.save()
@@ -53,38 +50,50 @@ export async function deletePost(userId, postId) {
   return await Post.deleteOne({ _id: postId, author: userId })
 }
 
+const ObjectId = mongoose.Types.ObjectId
+
 export async function likePost(postId, userId) {
-  // The Query remains the same: Only update if the user has NOT liked it yet.
+  // 1. Convert userId string to Mongoose ObjectId
+  // ENSURE 'userId' IS USED HERE:
+  const userObjectId = new ObjectId(userId)
+
+  // Query: Only update if the user has NOT liked it yet.
   const query = {
     _id: postId,
-    likedBy: { $ne: userId },
+    likedBy: { $ne: userObjectId },
   }
 
-  // Update: We use $inc (for counter) and $addToSet (ensures uniqueness)
+  // Update: We use $inc (for counter) and $addToSet
   return await Post.findOneAndUpdate(
     query,
     {
       $inc: { likes: 1 },
-      $addToSet: { likedBy: userId },
+      // ENSURE 'userObjectId' IS USED HERE:
+      $addToSet: { likedBy: userObjectId },
     },
     { new: true },
   )
 }
 
 export async function unlikePost(postId, userId) {
+  // 1. Convert userId string to Mongoose ObjectId
+  // ENSURE 'userId' IS USED HERE:
+  const userObjectId = new ObjectId(userId)
+
   // Query: Only update if the user HAS liked it AND the counter is above 0.
   const query = {
     _id: postId,
-    likedBy: userId,
+    likedBy: userObjectId, // Use the userObjectId in the query
     likes: { $gt: 0 },
   }
 
-  // Update: Decrement counter and $pull (remove) the user from the array.
+  // Update: Decrement counter and $pull (remove) the ObjectId from the array.
   return await Post.findOneAndUpdate(
     query,
     {
       $inc: { likes: -1 },
-      $pull: { likedBy: userId },
+      // ENSURE 'userObjectId' IS USED HERE:
+      $pull: { likedBy: userObjectId },
     },
     { new: true },
   )
