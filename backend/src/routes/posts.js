@@ -6,6 +6,8 @@ import {
   createPost,
   updatePost,
   deletePost,
+  likePost,
+  unlikePost,
 } from '../services/posts.js'
 import { requireAuth } from '../middleware/jwt.js'
 
@@ -74,7 +76,44 @@ export function postsRoutes(app) {
     }
   })
 
-  // app.post('/api/v1/posts/:id/like', async (req, res) => {
+  app.post('/api/v1/posts/:id/like', async (req, res) => {
+    const { id: postId } = req.params // Renaming 'id' to 'postId' for clarity
 
-  // })
+    try {
+      const post = await likePost(postId)
+
+      if (post === null) {
+        // If post is null, the ID was valid but no matching document was found
+        return res.status(404).end()
+      }
+
+      return res.json(post) // Returns the updated post object
+    } catch (err) {
+      console.error('error liking post', err)
+      // Check for potential Mongoose errors (e.g., bad object ID format)
+      if (err.name === 'CastError') {
+        return res.status(400).end()
+      }
+      return res.status(500).end()
+    }
+  })
+
+  app.patch('/api/v1/posts/:id/unlike', async (req, res) => {
+    const { id: postId } = req.params
+    try {
+      const post = await unlikePost(postId)
+
+      if (post === null) {
+        return res.status(404).end()
+      }
+
+      return res.json(post) // Returns the updated post object
+    } catch (err) {
+      console.error('error unliking post', err)
+      if (err.name === 'CastError') {
+        return res.status(400).end()
+      }
+      return res.status(500).end()
+    }
+  })
 }

@@ -53,6 +53,39 @@ export async function deletePost(userId, postId) {
   return await Post.deleteOne({ _id: postId, author: userId })
 }
 
-// export async function likePost(params) {
+export async function likePost(postId, userId) {
+  // The Query remains the same: Only update if the user has NOT liked it yet.
+  const query = {
+    _id: postId,
+    likedBy: { $ne: userId },
+  }
 
-// }
+  // Update: We use $inc (for counter) and $addToSet (ensures uniqueness)
+  return await Post.findOneAndUpdate(
+    query,
+    {
+      $inc: { likes: 1 },
+      $addToSet: { likedBy: userId },
+    },
+    { new: true },
+  )
+}
+
+export async function unlikePost(postId, userId) {
+  // Query: Only update if the user HAS liked it AND the counter is above 0.
+  const query = {
+    _id: postId,
+    likedBy: userId,
+    likes: { $gt: 0 },
+  }
+
+  // Update: Decrement counter and $pull (remove) the user from the array.
+  return await Post.findOneAndUpdate(
+    query,
+    {
+      $inc: { likes: -1 },
+      $pull: { likedBy: userId },
+    },
+    { new: true },
+  )
+}
