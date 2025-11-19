@@ -23,7 +23,9 @@ export function Post({
           <h3>{title}</h3>
         </Link>
       )}
-      {fullPost && <div>{contents}</div>}
+      <div>
+        <div>{contents}</div>
+      </div>
       <div>
         <img src={imageURL} alt={title} height='200' width='200' />
       </div>
