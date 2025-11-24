@@ -1,0 +1,4 @@
+{
+"schema": "https://friendly-lamp-r44jjvvv5p7jfw5gp-3001.app.github.dev/graphql",
+"documents": "src/api/graphql/**/*.{js,jsx}"
+}

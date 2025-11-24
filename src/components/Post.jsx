@@ -9,7 +9,7 @@ export function Post({
   contents,
   imageURL,
   author,
-  _id,
+  id,
   fullPost = false,
   likes,
   likedBy,
@@ -19,7 +19,7 @@ export function Post({
       {fullPost ? (
         <h3>{title}</h3>
       ) : (
-        <Link to={`/posts/${_id}/${slug(title)}`}>
+        <Link to={`/posts/${id}/${slug(title)}`}>
           <h3>{title}</h3>
         </Link>
       )}
@@ -30,17 +30,13 @@ export function Post({
         <img src={imageURL} alt={title} height='200' width='200' />
       </div>
       <div>
-        <LikeButton
-          postId={_id}
-          initialLikes={likes}
-          initialLikedBy={likedBy}
-        />
+        <LikeButton postId={id} initialLikes={likes} initialLikedBy={likedBy} />
       </div>
 
       {author && (
         <em>
           {fullPost && <br />}
-          Written by <User id={author} />
+          Written by <User {...author} />
         </em>
       )}
     </article>
@@ -50,9 +46,9 @@ export function Post({
 Post.propTypes = {
   title: PropTypes.string.isRequired,
   contents: PropTypes.string,
-  author: PropTypes.string,
+  author: PropTypes.shape(User.propTypes),
   imageURL: PropTypes.string,
-  _id: PropTypes.string.isRequired,
+  id: PropTypes.string.isRequired,
   fullPost: PropTypes.bool,
   likes: PropTypes.number,
   likedBy: PropTypes.arrayOf(PropTypes.string),
