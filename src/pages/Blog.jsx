@@ -5,7 +5,6 @@ import { CreatePost } from '../components/CreatePost.jsx'
 import { PostFilter } from '../components/PostFilter.jsx'
 import { PostSorting } from '../components/PostSorting.jsx'
 import { Header } from '../components/Header.jsx'
-import { Helmet } from 'react-helmet-async'
 import { getPosts } from '../api/posts.js'
 
 export function Blog() {
@@ -17,19 +16,10 @@ export function Blog() {
     queryKey: ['posts', { author, sortBy, sortOrder }],
     queryFn: () => getPosts({ author, sortBy, sortOrder }),
   })
-
   const posts = postsQuery.data ?? []
 
   return (
     <div style={{ padding: 8 }}>
-      <Helmet>
-        <title>Nos Recettes</title>
-        <meta
-          name='description'
-          content='A blog full of articles about full-stack
-React development.'
-        />
-      </Helmet>
       <Header />
       <br />
       <hr />
