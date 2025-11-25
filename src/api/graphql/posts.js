@@ -5,6 +5,7 @@ export const POST_FIELDS = gql`
     id
     title
     contents
+    imageURL
     tags
     updatedAt
     createdAt
